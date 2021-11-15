@@ -1,0 +1,7 @@
+module "init_node" {
+    source = "./modules/gcp-init-node"
+
+    credentials_file = "$credentials_file_path"
+    private_key_file = "$ssh_file_path"
+    ssh_user = "$ssh_user"
+}

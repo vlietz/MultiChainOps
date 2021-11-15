@@ -1,0 +1,24 @@
+
+module "gcp-node"{
+    node_count = $gcp_node_count
+    source = "./modules/gcp-node"
+    network_ip = module.init_node.public_ip
+
+    credentials_file = "$credentials_file_path"
+    private_key_file = "$ssh_file_path"
+    ssh_user = "$ssh_user"
+}
+
+
+module "aws-node"{
+    node_count = $aws_node_count
+    source = "./modules/aws-node"
+    network_ip = module.init_node.public_ip
+
+    private_key_path = "$private_key_path"
+    access_key = "$access_key"
+    secret_key = "$secret_key"
+    aws_key_name = "$aws_key_name"
+}
+
+

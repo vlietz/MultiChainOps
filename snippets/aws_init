@@ -1,0 +1,10 @@
+module "init_node" {
+    source = "./modules/aws-init-node"
+
+    private_key_path = "$private_key_path"
+    access_key = "$access_key"
+    secret_key = "$secret_key"
+    aws_key_name = "$aws_key_name"
+    
+
+}

@@ -1,0 +1,12 @@
+terraform/credentials.json
+terraform/params.json
+terraform/testnet
+terraform/vm3.pem
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+**/.terraform*
+**/*DS_Store
+**/.terraform.lock.hcl
+**/.DS_Store
+terraform/main.tf
+
