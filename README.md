@@ -10,9 +10,26 @@ Current supported cloud-providers are AWS and GCP.
 
 ## Setting up the cloud access
 
+### AWS
+
+### GCP
+
 
 ## Using this project
 
 
+## Lifecycle
+
+### Init
+
+### Apply
+
+### Show
+
+### Bake
+
+### Destroy
+
+### Clean
 
 
