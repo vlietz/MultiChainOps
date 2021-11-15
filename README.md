@@ -4,7 +4,14 @@ This README will describe how to deploy a Tezos Testnet in a multicloud environm
 
 Current supported cloud-providers are AWS and GCP.
 
+## General overview
 
+### Prerequisites
+
+## Setting up the cloud access
+
+
+## Using this project
 
 
 
