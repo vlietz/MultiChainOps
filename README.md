@@ -10,7 +10,7 @@ This project functions by creating a wrapper around the automated deployment of 
 
 ### Internal structure
 
-If you want to run a Tezos testnet, you must deploy multiple nodes and connect them as peers. Next the protocol needs to be started at one of the nodes. This results in a hierarchical structure of Terraform modules. Each cloud providers is therefore split into two modules: One 'init-node' module and one 'node' module. Both modules will create VMs at the selected cloud provider, deploy a Tezos node (in a docker container). The public IP adress of the init-node is distributed to every other nodes, enabling them all to connect to each other in a P2P manner. Therefore only one init-node of only one cloud provider should exist. The number of 'normal' nodes by other cloud providers is not limited.
+If you want to run a Tezos testnet, you must deploy multiple nodes and connect them as peers. Next the protocol needs to be started at one of the nodes. This results in a hierarchical structure of Terraform modules. Each cloud providers is therefore split into two modules: One 'init-node' module and one 'node' module. Both modules will create VMs at the selected cloud provider, deploy a Tezos node (in a docker container). The public IP adress of the init-node is distributed to every other nodes, enabling them all to connect to each other in a P2P manner. The init-node will also start the protocol and set the chain parameters. Therefore only one init-node of only one cloud provider should exist. The number of 'normal' nodes by other cloud providers is not limited.
 
 ### Prerequisites
 
