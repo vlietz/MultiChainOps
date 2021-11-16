@@ -1,15 +1,15 @@
 {
   "access": {
     "aws": {
-      "private_key_path": "vm3.pem",
-      "access_key": "AKIAQNJWCAO5FBE2B7N5",
-      "secret_key": "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",
-      "aws_key_name": "vm3"
+      "private_key_path": "",
+      "aws_key_name": "",
+      "access_key": "",
+      "secret_key": ""
     },
     "gcp": {
-      "credentials_file_path": "credentials.json",
-      "ssh_file_path": "~/.ssh/id_rsa",
-      "ssh_user": "tester2"
+      "credentials_file_path": "",
+      "ssh_file_path": "",
+      "ssh_user": ""
     }
   },
   "nodes": {

@@ -35,12 +35,11 @@ After setting up the access keys and key pair, open the `config.json` file and n
 {
   "access": {
     "aws": {
-      "private_key_path": "../vm3.pem",
+      "private_key_path": "vm3.pem",
       "aws_key_name": "vm3",
-      "access_key": "AOPEKOIJELAIJE",
-      "secret_key": "AIUDHAIHDAKJDHAKEJAKDHAJKE"
+      "access_key": "AKIAQNJWCAO5FBE2B7N5",
+      "secret_key": "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"
       
-    },
 ...
 ```
 
@@ -92,7 +91,7 @@ By running `clean` you can remove all generated files.
 * sometimes the init-node is connected to all nodes but the nodes are only connected to the init node. Expected behaviour is that the nodes automatically connect to every other node
 * maybe find a "cleaner" way to run the baker
 * remove some values from the config.json that should not be changed
-
+* use direct download urls for the tezos binaries, not ...latest
 
 
 
