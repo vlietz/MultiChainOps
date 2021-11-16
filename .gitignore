@@ -9,4 +9,4 @@ terraform/terraform.tfstate.backup
 **/.terraform.lock.hcl
 **/.DS_Store
 terraform/main.tf
-
+config.json
