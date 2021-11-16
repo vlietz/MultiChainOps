@@ -15,6 +15,7 @@ If you want to run a Tezos testnet, you must deploy multiple nodes and connect t
 ### Prerequisites
 
 To deploy a (private) Tezos testnet, you need to [install Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli) on your local maschine. You will aso need to setup the access to the cloud providers you want to use. You will need at least one for the testnet to function properly.
+Also you will need Python3 installed.
 
 ## Setting up the cloud access
 
@@ -28,25 +29,44 @@ To deploy a (private) Tezos testnet, you need to [install Terraform](https://lea
 
 ## Lifecycle
 
-`testnet.py` has multiple command-line parameters to interact with the testnet. For example
+`testnet.py` has multiple command-line arguments to interact with the testnet. For example
 
 ```python3 testnet.py init
 python3 testnet.py apply
 python3 testnet.py destroy 
 ```
 
-### Init
 
-### Apply
 
-### Show
+### init
+
+The `init` argument will generate terraform scripts based on the current configuration in config.json.
+
+### apply
+
+The argument `apply` will start the deployment of the current state. If the current deployment is running and no changes to the infrastrucure are made, this will not change anything. If the structure of the infrastrucure is changed, this may apply those changes. It is important to understand that this will not apply changes to the configuration of the chain. If you want those to apply, you must destroy the deployment at first and reinitialize everything. 
+
+### show
+
+`show` will give you informations about the current deployment like IP adresses and provider configurations.
 
 ### Bake
 
 ### Destroy
 
+`destroy` will stop the current deployment and remove all virtual machines from the cloud providers.
+
+
 ### Clean
+
+By running `clean` you can remove all generated files. 
 
 ## Bugs / ToDo()
 * gcp_init_node does somehow not work really when constructed via config.json
 * sometimes the init-node is connected to all nodes but the nodes are only connected to the init node. Expected behaviour is that the nodes automatically connect to every other node
+* maybe find a "cleaner" way to run the baker
+
+
+
+
+
