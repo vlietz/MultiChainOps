@@ -46,7 +46,40 @@ After setting up the access keys and key pair, open the `config.json` file and n
 The root path for this config is the path of the terraform folder of the project.
 
 
-### GCP
+### Google Cloud Platform GCP
+
+For the usage of GCP cloud provider you need a locally existing SSH key and credentials to a Google Cloud project. 
+
+To generate an SSH key you can follow [this](https://confluence.atlassian.com/bitbucketserver/creating-ssh-keys-776639788.html) tutorial.
+
+To obtain a credentials file, follow [this guide](https://cloud.google.com/community/tutorials/getting-started-on-gcp-with-terraform).
+
+After setting up the SSH key and GCP credentials, go to `config.json` and set up the required config parameters. Example:
+
+```
+"access": {
+    "aws": {
+     ...
+    },
+    "gcp": {
+      "credentials_file_path": "../credentials.json",
+      "ssh_file_path": "~/.ssh/id_rsa",
+      "ssh_user": "tester2"
+    }
+  },
+...
+```
+The root path for this config is the path of the terraform folder of the project.
+
+## Config
+
+In the `nodes` objectn in `config.json` you can change the number of nodes for each cloud provider and the provider of the init-node. Only setting an init-node is the minimum deployment setup for this project. 
+Also the init-node does not count towards the count of the nodes, therefore the count of all created nodes is `aws_node_count + gcp_node_count + 1`.
+
+The `chain` object of the configuration sets the basic parameters of the chain like the internal name of the testnet, the protocol and the genesis block.
+(At the current state of the project, do not delete the 127.0.0.1 bootstrap peer. You might add custom ones tho.)
+
+The `params` object contains the basic behavioral parameters of the chain. The default config is suitable for the granada protocol and might be changed for older or newer protocol versions.
 
 
 ## Using this project
