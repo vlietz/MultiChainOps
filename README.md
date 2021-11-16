@@ -28,6 +28,12 @@ To deploy a (private) Tezos testnet, you need to [install Terraform](https://lea
 
 ## Lifecycle
 
+`testnet.py` has multiple command-line parameters to interact with the testnet. For example
+
+```python3 testnet.py init
+python3 testnet.py apply
+python3 testnet.py destroy ```
+
 ### Init
 
 ### Apply
