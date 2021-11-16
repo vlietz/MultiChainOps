@@ -32,7 +32,8 @@ To deploy a (private) Tezos testnet, you need to [install Terraform](https://lea
 
 ```python3 testnet.py init
 python3 testnet.py apply
-python3 testnet.py destroy ```
+python3 testnet.py destroy 
+```
 
 ### Init
 
