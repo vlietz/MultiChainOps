@@ -29,12 +29,10 @@ variable "region"{
 }
 variable "access_key"{
     type = string
-    #default = "AKIAQNJWCAO5EKOUVFGY"
     description = "AWS Access Key"
 }
 variable "secret_key"{
     type = string
-    #default = "TnFmE5YpNnlmZpWKdVEbHtL7pB3gYzNyZldcPFmm"
     description = "AWS Secret Key"
 }
 variable "network_ip"{

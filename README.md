@@ -22,7 +22,30 @@ Also you will need Python3 installed.
 
 ## Setting up the cloud access
 
-### AWS
+### Amazon Web Services AWS
+
+In order to use AWS as a provider for the testnet, you need to obtain access keys from the aws developer console. [This](https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html) tutorial will guide you through the process of creating and obtaining the credentials needed.
+This access keys enables the deployment to create VM instances in aws.
+
+To install all needed components at the VMs via SSH, you also need to create a key pair in the AWS console. Follow [this](https://docs.aws.amazon.com/servicecatalog/latest/adminguide/getstarted-keypair.html) guide to do so.
+
+After setting up the access keys and key pair, open the `config.json` file and navigate to access/aws and fill out the required fields. Example:
+
+```
+{
+  "access": {
+    "aws": {
+      "private_key_path": "../vm3.pem",
+      "aws_key_name": "vm3",
+      "access_key": "AOPEKOIJELAIJE",
+      "secret_key": "AIUDHAIHDAKJDHAKEJAKDHAJKE"
+      
+    },
+...
+```
+
+The root path for this config is the path of the terraform folder of the project.
+
 
 ### GCP
 

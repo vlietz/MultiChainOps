@@ -25,12 +25,10 @@ variable "region"{
 }
 variable "access_key"{
     type = string
-    #default = "AKIAQNJWCAO5EKOUVFGY"
     description = "AWS Access Key"
 }
 variable "secret_key"{
     type = string
-    #default = "TnFmE5YpNnlmZpWKdVEbHtL7pB3gYzNyZldcPFmm"
     description = "AWS Secret Key"
 }
 
@@ -42,10 +40,8 @@ variable "ssh_user"{
 }
 variable "private_key_path"{
     type = string
-    #default = "vm3.pem"
     description = "Path to .pem private key"
 }
 variable "aws_key_name"{
-    #default = "vm3"
     type = string
 }

@@ -28,16 +28,13 @@ variable "image" {
 variable "ssh_user" {
   type        = string
   description = "SSH User"
-  #default     = "tester2"
 }
 variable "private_key_file" {
   type        = string
   description = "Path to the private key file for ssh login"
-  #default     = "~/.ssh/id_rsa"
 }
 variable "credentials_file" {
   type        = string
   description = "Path to the credentials file"
-  #default     = "credentials.json"
 }
 
