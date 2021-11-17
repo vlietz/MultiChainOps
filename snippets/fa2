@@ -1,0 +1,22 @@
+
+resource "null_resource" "eaeaeaedada" {
+  connection {
+    type        = "ssh"
+    host        = module.init_node.public_ip
+    user        = "ubuntu"
+    private_key = file("vm3.pem")
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "sudo docker exec node tezos-client import secret key alice unencrypted:edsk3QoqBuvdamxouPhin7swCvkQNgq4jP5KZPbwWNnwdZpSpJiEbq --force",
+      "sudo docker exec node tezos-client import secret key originator unencrypted:edsk3QoqBuvdamxouPhin7swCvkQNgq4jP5KZPbwWNnwdZpSpJiEbq --force",
+      "sudo docker exec node tezos-client import secret key administrator unencrypted:edsk3QoqBuvdamxouPhin7swCvkQNgq4jP5KZPbwWNnwdZpSpJiEbq --force",
+      "sudo docker exec node tezos-client import secret key bob unencrypted:edsk3RFfvaFaxbHx8BMtEW1rKQcPtDML3LXjNqMNLCzC3wLC1bWbAt --force",
+      "sudo docker exec node wget -O fa2_default.tz 'https://gitlab.com/smondet/fa2-smartpy/-/raw/4acac092/michelson/20200910-203659+0000_5060996_contract.tz'",
+      "sudo docker exec node tezos-client transfer 30000 from baker to originator --burn-cap 0.257",
+      "sudo docker exec node tezos-client originate contract myfa2 transferring 0 from originator running fa2_default.tz  --init '(Pair (Pair \"tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb\" (Pair 0 {})) (Pair (Pair Unit {}) (Pair False {})))'       --burn-cap 10000 --force --no-print-source"
+    ]
+  }
+}
+
+

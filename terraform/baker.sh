@@ -1,0 +1,1 @@
+while true; do sudo docker exec node tezos-client bake for baker; sleep 1; done

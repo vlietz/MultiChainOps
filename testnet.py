@@ -93,13 +93,20 @@ def terraform_show():
     p.wait()
 
 def terraform_deploy():
-    p = subprocess.Popen(["cd terraform; terraform init; terraform apply --auto-approve"], stdout=subprocess.PIPE, shell=True)
+    p = subprocess.Popen(["cd terraform; terraform init; terraform apply --auto-approve -lock=false"], stdout=subprocess.PIPE, shell=True)
 
     for line in iter(p.stdout.readline, b''):
         print (line.decode('UTF-8').replace("\n", "")),
     p.stdout.close()
     p.wait()
 
+def terraform_fa2():
+    with open('./terraform/main.tf', "a+") as myfile:
+    # if 'baker' not in myfile.read():
+        with open('./snippets/fa2') as baker_snippet:
+            
+            myfile.write(baker_snippet.read().replace("$random_hash", get_random_string(8)))
+    terraform_deploy()
 
 def terraform_destroy():
     p = subprocess.Popen(["cd terraform; terraform destroy --auto-approve"], stdout=subprocess.PIPE, shell=True)
@@ -114,7 +121,7 @@ def terraform_state_show():
 
 parser = argparse.ArgumentParser()
 sp = parser.add_subparsers(dest='cmd')
-for cmd in ['destroy', 'apply', 'show', 'init', 'bake', 'clean']:
+for cmd in ['destroy', 'apply', 'show', 'init', 'bake', 'clean', 'fa2']:
     sp.add_parser(cmd)
 # for cmd in ['MOVEABS', 'MOVEREL']:
 #     spp = sp.add_parser(cmd)
@@ -144,7 +151,8 @@ if args.cmd == "bake":
 if args.cmd == "clean":
     terraform_clean()
 
-
+if args.cmd == "fa2":
+    terraform_fa2()
 exit()
 
 

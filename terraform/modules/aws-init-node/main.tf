@@ -31,10 +31,10 @@ resource "aws_instance" "init_node" {
     source      = "./testnet"
     destination = "./testnet"
   }
-  #  provisioner "file" {
-  #   source      = "./baker.sh"
-  #   destination = "./baker.sh"
-  # }
+   provisioner "file" {
+    source      = "./baker.sh"
+    destination = "./baker.sh"
+  }
   provisioner "file" {
     source      = "./params.json"
     destination = "./params.json"
@@ -59,7 +59,7 @@ resource "aws_instance" "init_node" {
       "sudo docker exec node cat testnet",
       "sudo docker exec node tezos-node config init --network=./testnet",
       "nohup sudo docker exec node tezos-node run --rpc-addr localhost:8732 --bootstrap-threshold=1 --rpc-addr :8733 &",
-      "sleep 10",
+      "sleep 5",
       "cat nohup.out",
 
       "sudo docker exec node tezos-client import secret key activator unencrypted:edsk31vznjHSSpGExDMHYASz45VZqXN4DPxvsa4hAyY8dHM28cZzp6",
@@ -72,14 +72,17 @@ resource "aws_instance" "init_node" {
 
       "sudo docker exec node tezos-client activate protocol PtGRANADsDU8R9daYKAgWnQYAJ64omN1o3KMGVCykShA97vQbvV with fitness 1 and key activator and parameters params.json",
 
-      "sleep 10",
+      "sleep 5",
       "cat nohup.out",
-      # "sudo docker cp ./baker.sh node:/home/tezos/baker.sh",
-      # "nohup sudo docker exec node /bin/sh baker.sh &> baker.out &",
-      # "sleep 5",
-      # "cat baker.out"
+      #"sudo docker cp ./baker.sh node:/home/tezos/baker.sh",
+      "nohup sudo /bin/sh ./baker.sh &> baker.out &",
+      # "nohup baker.sh &> baker.out &",
+      "sleep 5",
+      "cat nohup.out",
+
     ]
   }
+
 
 
 
