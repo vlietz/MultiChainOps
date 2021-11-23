@@ -122,8 +122,9 @@ You might want to add baking to every node yourself.
 
 Smart Contracts can be injected into the blockchain via the command
 
-````
+```
 python3 testnet.py contract
+
 ```
 
 The configuration of the smart contract deployment is set in the `contract.json` file. The example configuration implements a FA2 smart contract implementation described in [this](https://assets.tqtezos.com/docs/token-contracts/fa2/1-fa2-smartpy/) article.
@@ -143,7 +144,6 @@ python3 testnet.py contract
 
 [The Smart Contract](https://gitlab.com/smondet/fa2-smartpy/-/raw/4acac092/michelson/20200910-203659+0000_5060996_contract.tz) will be downloaded at the init-node and originated. For this, multiple accounts are imported. The contract alias is `myfa2`. -->
 
-
 ## Bugs / toDo()
 
 - gcp_init_node does somehow not work really when constructed via config.json
@@ -151,4 +151,7 @@ python3 testnet.py contract
 - maybe find a "cleaner" way to run the baker
 - remove some values from the config.json that should not be changed
 - use direct download urls for the tezos binaries, not ...latest
+
+```
+
 ```
