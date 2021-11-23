@@ -1,0 +1,27 @@
+{
+  "user": [
+    [
+      "originator",
+      "unencrypted:edsk3QoqBuvdamxouPhin7swCvkQNgq4jP5KZPbwWNnwdZpSpJiEbq"
+    ],
+    [
+      "alice",
+      "unencrypted:edsk3QoqBuvdamxouPhin7swCvkQNgq4jP5KZPbwWNnwdZpSpJiEbq"
+    ],
+    [
+      "administrator",
+      "unencrypted:edsk3QoqBuvdamxouPhin7swCvkQNgq4jP5KZPbwWNnwdZpSpJiEbq"
+    ],
+    [
+      "bob",
+      "unencrypted:edsk3RFfvaFaxbHx8BMtEW1rKQcPtDML3LXjNqMNLCzC3wLC1bWbAt"
+    ]
+  ],
+  "contract": {
+    "name": "myfa2",
+    "path": "https://gitlab.com/smondet/fa2-smartpy/-/raw/4acac092/michelson/20200910-203659+0000_5060996_contract.tz",
+    "transfer": "30000",
+    "init": "(Pair (Pair \\\"tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb\\\" (Pair 0 {})) (Pair (Pair Unit {}) (Pair False {})))",
+    "burn-cap": "10000"
+  }
+}

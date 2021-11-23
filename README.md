@@ -1,4 +1,4 @@
-# Tezos-Testnet-Multicloud
+# MultiChainOps
 
 This README will describe how to deploy a Tezos test-network in a multicloud environment.
 
@@ -73,7 +73,7 @@ The root path for this config is the path of the terraform folder of the project
 
 ## Config
 
-In the `nodes` objectn in `config.json` you can change the number of nodes for each cloud provider and the provider of the init-node. Only setting an init-node is the minimum deployment setup for this project.
+In the `nodes` object in `config.json` you can change the number of nodes for each cloud provider and the provider of the init-node. Only setting an init-node is the minimum deployment setup for this project.
 Also the init-node does not count towards the count of the nodes, therefore the count of all created nodes is `aws_node_count + gcp_node_count + 1`.
 
 The `chain` object of the configuration sets the basic parameters of the chain like the internal name of the testnet, the protocol and the genesis block.
@@ -120,18 +120,29 @@ You might want to add baking to every node yourself.
 
 # Smart Contracts / Cryptocurrencies
 
-## FA2
+Smart Contracts can be injected into the blockchain via the command
+
+````
+python3 testnet.py contract
+```.
+
+The configuration of the smart contract deployment is set in the `contract.json` file. The example configuration implements a FA2 smart contract implementation described in [this](https://assets.tqtezos.com/docs/token-contracts/fa2/1-fa2-smartpy/) article.
+
+<!-- ## FA2
 
 [FA2](https://tezos.b9lab.com/fa2) is a common standard that implements tokens that may be used for example for fungible or non-fungible tokens on the tezos blockchain.
 This project implements [this](https://assets.tqtezos.com/docs/token-contracts/fa2/1-fa2-smartpy/) Michelson smart contract implementation of the FA2 standard, written in SmartPy.
 
 To add it, just run the command `fa2`, like
 
-```
-python3 testnet.py fa2
+````
+
+python3 testnet.py contract
+
 ```
 
-[The Smart Contract](https://gitlab.com/smondet/fa2-smartpy/-/raw/4acac092/michelson/20200910-203659+0000_5060996_contract.tz) will be downloaded at the init-node and originated. For this, multiple accounts are imported. The contract alias is `myfa2`.
+[The Smart Contract](https://gitlab.com/smondet/fa2-smartpy/-/raw/4acac092/michelson/20200910-203659+0000_5060996_contract.tz) will be downloaded at the init-node and originated. For this, multiple accounts are imported. The contract alias is `myfa2`. -->
+
 
 ## Bugs / toDo()
 
@@ -140,3 +151,4 @@ python3 testnet.py fa2
 - maybe find a "cleaner" way to run the baker
 - remove some values from the config.json that should not be changed
 - use direct download urls for the tezos binaries, not ...latest
+```

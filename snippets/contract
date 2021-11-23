@@ -1,0 +1,20 @@
+
+resource "null_resource" "$random_hash" {
+  connection {
+    type        = "ssh"
+    host        = module.init_node.public_ip
+    user        = "ubuntu"
+    private_key = file("$private_key_path")
+  }
+  provisioner "remote-exec" {
+    inline = [
+
+      $user
+      "sudo docker exec node wget -O $name.tz '$path'",
+      "sudo docker exec node tezos-client transfer $transfer from baker to originator --burn-cap 0.257",
+      "sudo docker exec node tezos-client originate contract $name transferring 0 from originator running $name.tz  --init '$init'       --burn-cap $burn-cap --force --no-print-source"
+    ]
+  }
+}
+
+

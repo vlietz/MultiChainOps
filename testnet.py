@@ -20,26 +20,9 @@ def write_testnet(params):
     with open('./terraform/testnet', 'w+') as outfile:
         json.dump(params, outfile)
 
-
-def generate_main(params, access):
-    print_string = ""
-    initfile = ""
-    with open ("./snippets/nodes", "r") as myfile:
-        nodes =  myfile.read()
-
-    if params["init_node"] == "aws":
-        initfile = "./snippets/aws_init"
-
-    if params["init_node"] == "gcp":
-        initfile = "./snippets/gcp_init"
-    
-    with open (initfile, "r") as myfile:
-        print_string = print_string + myfile.read()
-
-    print_string = print_string + nodes
-
-    print_string = print_string.replace("$gcp_node_count", str(params["gcp_node_count"]))
-    print_string = print_string.replace("$aws_node_count", str(params["aws_node_count"]))
+def main_replace(print_string, nodes, access):
+    print_string = print_string.replace("$gcp_node_count", str(nodes["gcp_node_count"]))
+    print_string = print_string.replace("$aws_node_count", str(nodes["aws_node_count"]))
     print_string = print_string.replace("$credentials_file_path", access["gcp"]["credentials_file_path"])
     print_string = print_string.replace("$ssh_file_path", access["gcp"]["ssh_file_path"])
     print_string = print_string.replace("$ssh_user", access["gcp"]["ssh_user"])
@@ -47,6 +30,28 @@ def generate_main(params, access):
     print_string = print_string.replace("$access_key", access["aws"]["access_key"])
     print_string = print_string.replace("$secret_key", access["aws"]["secret_key"])
     print_string = print_string.replace("$aws_key_name", access["aws"]["aws_key_name"])
+    return print_string
+
+def generate_main(nodes, access):
+    print_string = ""
+    initfile = ""
+
+
+    with open ("./snippets/nodes", "r") as myfile:
+        nodes_file =  myfile.read()
+
+    if nodes["init_node"] == "aws":
+        initfile = "./snippets/aws_init"
+
+    if nodes["init_node"] == "gcp":
+        initfile = "./snippets/gcp_init"
+    
+    with open (initfile, "r") as myfile:
+        print_string = print_string + myfile.read()
+
+    print_string = print_string + nodes_file
+
+    print_string = main_replace(print_string, nodes, access)
     with open('./terraform/main.tf', 'w+') as outfile:
         outfile.write(print_string)
 
@@ -65,17 +70,15 @@ def terraform_bake():
 def terraform_config():
 
     with open('config.json') as json_file:
-        data = json.load(json_file)
+        config = json.load(json_file)
         
-        data["params"]["bootstrap_accounts"] = [["key1", "4000000000000"]]
+        config["params"]["bootstrap_accounts"] = [["key1", "4000000000000"]]
 
-        write_params(data["params"])
+        write_params(config["params"])
 
-        write_testnet(data["chain"])
+        write_testnet(config["chain"])
 
-
-
-        generate_main(data["nodes"], data["access"])
+        generate_main(config["nodes"], config["access"])
 
 
 
@@ -108,6 +111,39 @@ def terraform_fa2():
             myfile.write(baker_snippet.read().replace("$random_hash", get_random_string(8)))
     terraform_deploy()
 
+def terraform_contract():
+
+    #terraform_config()
+
+    with open('contract.json') as json_file:
+        contract = json.load(json_file)
+    with open('config.json') as config_json:
+        config = json.load(config_json)
+
+
+    with open('./terraform/main.tf', "a+") as myfile:
+    # if 'baker' not in myfile.read():
+        with open('./snippets/contract') as baker_snippet:
+            userstr = ""
+            for user in contract["user"]:
+                userstr = userstr + "\"sudo docker exec node tezos-client import secret key " + user[0] + " " + user[1] + " --force\",\n      "
+            
+            print_string = baker_snippet.read()
+
+            print_string = print_string.replace("$user", userstr)
+            print_string = print_string.replace("$name", contract["contract"]["name"])
+            print_string = print_string.replace("$init", contract["contract"]["init"])
+            print_string = print_string.replace("$path", contract["contract"]["path"])
+            print_string = print_string.replace("$transfer", contract["contract"]["transfer"])
+            print_string = print_string.replace("$burn-cap", contract["contract"]["burn-cap"])
+
+
+            print_string = main_replace(print_string, config["nodes"], config["access"])
+            
+            myfile.write(print_string.replace("$random_hash", get_random_string(8)))
+    terraform_deploy()
+
+
 def terraform_destroy():
     p = subprocess.Popen(["cd terraform; terraform destroy --auto-approve"], stdout=subprocess.PIPE, shell=True)
 
@@ -121,12 +157,12 @@ def terraform_state_show():
 
 parser = argparse.ArgumentParser()
 sp = parser.add_subparsers(dest='cmd')
-for cmd in ['destroy', 'apply', 'show', 'init', 'bake', 'clean', 'fa2']:
+for cmd in ['destroy', 'apply', 'show', 'init', 'bake', 'clean', 'contract']:
     sp.add_parser(cmd)
-# for cmd in ['MOVEABS', 'MOVEREL']:
+# for cmd in ['contract', 'MOVEREL']:
 #     spp = sp.add_parser(cmd)
-#     spp.add_argument('x', type=float)
-#     spp.add_argument('y', type=float)
+    # spp.add_argument('x', type=ascii)
+    # spp.add_argument('y', type=float)
 parser.print_help()
 args = parser.parse_args()
 
@@ -151,23 +187,11 @@ if args.cmd == "bake":
 if args.cmd == "clean":
     terraform_clean()
 
-if args.cmd == "fa2":
-    terraform_fa2()
-exit()
+if args.cmd == "contract":
+    terraform_contract()
 
 
 
-#kommandos einfügen für destroy/deploy/view(aktive config anzeigen)/status holen/
-#ggf einige interessante informationen parsen, zB IPs
 
-#bake hinzufügen
-#baking in python script (threading)
-#baking ins deployment unabhängig vom python script
-p = subprocess.Popen(["cd terraform; terraform init; terraform apply --auto-approve"], stdout=subprocess.PIPE, shell=True)
-
-for line in iter(p.stdout.readline, b''):
-    print (line.decode('UTF-8')),
-p.stdout.close()
-p.wait()
 
 
