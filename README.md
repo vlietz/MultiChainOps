@@ -124,7 +124,6 @@ Smart Contracts can be injected into the blockchain via the command
 
 ```
 python3 testnet.py contract
-
 ```
 
 The configuration of the smart contract deployment is set in the `contract.json` file. The example configuration implements a FA2 smart contract implementation described in [this](https://assets.tqtezos.com/docs/token-contracts/fa2/1-fa2-smartpy/) article.
